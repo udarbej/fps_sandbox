@@ -103,6 +103,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "e43368cd-62a9-4f98-b7b1-dc5509037ced",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -268,6 +277,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Lean_Right_Released",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b75b444f-edb2-4905-aa30-9d2a42162a01",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

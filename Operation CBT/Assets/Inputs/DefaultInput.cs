@@ -125,6 +125,15 @@ public partial class @DefaultInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""e43368cd-62a9-4f98-b7b1-dc5509037ced"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -292,6 +301,17 @@ public partial class @DefaultInput : IInputActionCollection2, IDisposable
                     ""action"": ""Lean_Right_Released"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b75b444f-edb2-4905-aa30-9d2a42162a01"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -379,6 +399,7 @@ public partial class @DefaultInput : IInputActionCollection2, IDisposable
         m_Character_Lean_Left_Released = m_Character.FindAction("Lean_Left_Released", throwIfNotFound: true);
         m_Character_Lean_Right_Pressed = m_Character.FindAction("Lean_Right_Pressed", throwIfNotFound: true);
         m_Character_Lean_Right_Released = m_Character.FindAction("Lean_Right_Released", throwIfNotFound: true);
+        m_Character_Pause = m_Character.FindAction("Pause", throwIfNotFound: true);
         // Weapon
         m_Weapon = asset.FindActionMap("Weapon", throwIfNotFound: true);
         m_Weapon_Fire1Pressed = m_Weapon.FindAction("Fire1Pressed", throwIfNotFound: true);
@@ -454,6 +475,7 @@ public partial class @DefaultInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_Character_Lean_Left_Released;
     private readonly InputAction m_Character_Lean_Right_Pressed;
     private readonly InputAction m_Character_Lean_Right_Released;
+    private readonly InputAction m_Character_Pause;
     public struct CharacterActions
     {
         private @DefaultInput m_Wrapper;
@@ -469,6 +491,7 @@ public partial class @DefaultInput : IInputActionCollection2, IDisposable
         public InputAction @Lean_Left_Released => m_Wrapper.m_Character_Lean_Left_Released;
         public InputAction @Lean_Right_Pressed => m_Wrapper.m_Character_Lean_Right_Pressed;
         public InputAction @Lean_Right_Released => m_Wrapper.m_Character_Lean_Right_Released;
+        public InputAction @Pause => m_Wrapper.m_Character_Pause;
         public InputActionMap Get() { return m_Wrapper.m_Character; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -511,6 +534,9 @@ public partial class @DefaultInput : IInputActionCollection2, IDisposable
                 @Lean_Right_Released.started -= m_Wrapper.m_CharacterActionsCallbackInterface.OnLean_Right_Released;
                 @Lean_Right_Released.performed -= m_Wrapper.m_CharacterActionsCallbackInterface.OnLean_Right_Released;
                 @Lean_Right_Released.canceled -= m_Wrapper.m_CharacterActionsCallbackInterface.OnLean_Right_Released;
+                @Pause.started -= m_Wrapper.m_CharacterActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_CharacterActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_CharacterActionsCallbackInterface.OnPause;
             }
             m_Wrapper.m_CharacterActionsCallbackInterface = instance;
             if (instance != null)
@@ -548,6 +574,9 @@ public partial class @DefaultInput : IInputActionCollection2, IDisposable
                 @Lean_Right_Released.started += instance.OnLean_Right_Released;
                 @Lean_Right_Released.performed += instance.OnLean_Right_Released;
                 @Lean_Right_Released.canceled += instance.OnLean_Right_Released;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
             }
         }
     }
@@ -614,6 +643,7 @@ public partial class @DefaultInput : IInputActionCollection2, IDisposable
         void OnLean_Left_Released(InputAction.CallbackContext context);
         void OnLean_Right_Pressed(InputAction.CallbackContext context);
         void OnLean_Right_Released(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
     public interface IWeaponActions
     {
