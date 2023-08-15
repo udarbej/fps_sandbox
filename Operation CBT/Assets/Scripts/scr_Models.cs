@@ -38,12 +38,41 @@ public static class scr_Models
         public float crouch_mod;
         public float prone_mod;
         public float slide_mod;
+
+        [Header("Is Grounded / Falling")]
+        public float isGroundedRadius;
+        public float isFallingSpeed;
     }
 
     [Serializable]
     public class CharacterStance{
         public float camera_height;
         public CapsuleCollider stance_collider;
+    }
+
+    #endregion
+
+    #region - Weapons -
+
+    [Serializable]
+    public class WeaponSettingsModel
+    {
+        [Header("Weapon Sway")]
+        public float SwayAmount;
+        public bool SwayYInverted;
+        public bool SwayXInverted;
+        public float SwaySmoothing;
+        public float SwayResetSmoothing;
+        public float SwayClampX;
+        public float SwayClampY;
+        
+        [Header("Weapon Movement Sway")]
+        public float MovementSwayX;
+        public float MovementSwayY;
+        public bool MovementSwayXInverted;
+        public bool MovementSwayYInverted;
+        public float MovementSwaySmoothing;
+
     }
 
     #endregion

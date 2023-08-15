@@ -11,7 +11,8 @@
                     "id": "67dcb459-f0f4-4290-84d0-bb6cbe6d7450",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "View",
@@ -19,7 +20,8 @@
                     "id": "712543ae-a726-4345-9a4b-1b0eb51f9120",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Jump",
@@ -27,7 +29,8 @@
                     "id": "ebf780e5-dbfe-4615-8854-7b8a05e42abe",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Crouch",
@@ -35,7 +38,8 @@
                     "id": "2c8cd861-12e7-4fa9-b3b5-08d827706f88",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Prone",
@@ -43,7 +47,8 @@
                     "id": "296158a2-ffe2-4535-a608-d53fee2f4008",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Sprint",
@@ -51,7 +56,8 @@
                     "id": "eaeb132c-59be-4d95-bfc8-dd84e660ac0a",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
                     "name": "Sprint_Release",
@@ -59,23 +65,44 @@
                     "id": "d9de7ae2-7b7c-400a-b8ee-5a14273d0a9c",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
-                    "name": "Lean_Left",
+                    "name": "Lean_Left_Pressed",
                     "type": "PassThrough",
                     "id": "6fa1cd54-c19c-4b67-82ba-c1dc0db55c52",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 },
                 {
-                    "name": "Lean_Right",
+                    "name": "Lean_Left_Released",
+                    "type": "PassThrough",
+                    "id": "4d69bdba-b2b4-4ee0-bc92-ee32c2126b24",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Lean_Right_Pressed",
                     "type": "PassThrough",
                     "id": "1a514caf-0ba4-4701-a482-cf5eb4a92b2e",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Lean_Right_Released",
+                    "type": "PassThrough",
+                    "id": "c9efc215-ef67-471a-ab7f-69faecb99769",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -207,7 +234,7 @@
                     "interactions": "Press",
                     "processors": "",
                     "groups": "",
-                    "action": "Lean_Right",
+                    "action": "Lean_Right_Pressed",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -218,7 +245,97 @@
                     "interactions": "Press",
                     "processors": "",
                     "groups": "",
-                    "action": "Lean_Left",
+                    "action": "Lean_Left_Pressed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8dc30c8c-661b-4ce6-8ef8-8af3e0b4f831",
+                    "path": "<Keyboard>/q",
+                    "interactions": "Press(behavior=1)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Lean_Left_Released",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6019e35e-d103-4f03-b49e-becf5946a845",
+                    "path": "<Keyboard>/e",
+                    "interactions": "Press(behavior=1)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Lean_Right_Released",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Weapon",
+            "id": "09235016-e333-4d61-94ff-b563e3b8861e",
+            "actions": [
+                {
+                    "name": "Fire1Pressed",
+                    "type": "Button",
+                    "id": "2de21b55-e857-40fe-928d-b3a08287e3a2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Fire1Released",
+                    "type": "Button",
+                    "id": "b89bc338-cdb9-491f-8686-3edbe5bb4ff6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press(behavior=1)",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Reload",
+                    "type": "Button",
+                    "id": "e0b1b6b9-f891-43ee-8b94-24c9009b079d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "75a9df8e-c50f-41f5-a997-6bb07ecd5319",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Fire1Pressed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4280900f-699f-4ab5-abf7-e7dc4460f490",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Fire1Released",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1473e557-aafc-4ac7-9dbe-2cd81ee1e618",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Reload",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

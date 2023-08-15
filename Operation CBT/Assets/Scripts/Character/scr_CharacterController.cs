@@ -8,8 +8,10 @@ public class scr_CharacterController : MonoBehaviour
 {
     private CharacterController character_control;
     private DefaultInput default_input;
-    private Vector2 input_movement;
-    private Vector2 input_view;
+    [HideInInspector]
+    public Vector2 input_movement;
+    [HideInInspector]
+    public Vector2 input_view;
     private Vector3 new_cam_rot;
     private Vector3 new_player_rot;
 
@@ -21,6 +23,7 @@ public class scr_CharacterController : MonoBehaviour
     [Header("Settings")]
     public PlayerSettingsModel player_settings;
     public LayerMask player_mask;
+    public LayerMask ground_mask;
     private float viewclamp_y_min = -90;
     private float viewclamp_y_max = 90;
 
@@ -34,8 +37,10 @@ public class scr_CharacterController : MonoBehaviour
     [Header("Movement")]
     public float set_slide_time;
     private float temp_slide_time;
-    private bool is_sliding;
-    private bool is_sprinting;
+    [HideInInspector]
+    public bool is_sprinting;
+    [HideInInspector]
+    public bool is_sliding;
     private Vector3 default_speed;
     private Vector3 default_velocity;
     private Vector3 direction;
@@ -52,6 +57,27 @@ public class scr_CharacterController : MonoBehaviour
     private Vector3 center_velocity;
     private float height_velocity;
 
+    [Header("Leaning")]
+    public Transform LeanPivot;
+    private float currentLean;
+    private float targetLean;
+    public float leanAngle;
+    public float leanSmoothing;
+    private float leanVelocity;
+    private bool isLeaningLeft;
+    private bool isLeaningRight;
+
+    [Header("Weapon")]
+    public scr_WeaponController current_weapon;
+    public float weaponAnimationSpeed;
+
+    [HideInInspector]
+    public bool isGrounded;
+    [HideInInspector]
+    public bool isFalling;
+
+
+
     private void Awake(){
         //read actuation of inputs
         default_input = new DefaultInput();
@@ -60,25 +86,64 @@ public class scr_CharacterController : MonoBehaviour
         default_input.Character.Jump.performed += e => jump();
         default_input.Character.Crouch.performed += e => crouch();
         default_input.Character.Prone.performed += e => prone();
-        default_input.Character.Lean_Left.performed += e => lean_left();
-        default_input.Character.Lean_Right.performed += e => lean_right();
         default_input.Character.Sprint.performed += e => sprint();
         default_input.Character.Sprint_Release.performed += e => stop_sprint();
+        default_input.Character.Lean_Left_Pressed.performed += e => isLeaningLeft = true;
+        default_input.Character.Lean_Left_Released.performed += e => isLeaningLeft = false;
+        default_input.Character.Lean_Right_Pressed.performed += e => isLeaningRight = true;
+        default_input.Character.Lean_Right_Released.performed += e => isLeaningRight = false;
+
+        default_input.Weapon.Fire1Pressed.performed += e => ShootingPressed();
+        default_input.Weapon.Fire1Released.performed += e => ShootingReleased();
+        default_input.Weapon.Reload.performed += e => ReloadPressed();
+
         default_input.Enable();
         //get player and camera rotation amounts
         new_cam_rot = camera_holder.localRotation.eulerAngles;
         new_player_rot = transform.localRotation.eulerAngles;
         character_control = GetComponent<CharacterController>();
         cam_pos = camera_holder.localPosition.y;
+        if(current_weapon){
+            current_weapon.initialize(this);
+        }
     }
 
     private void Update(){
         //get new player values
+        SetIsGrounded();
+        SetIsFalling();
         calculate_movment();
         calculate_view();
         calculate_stance();
+        calculate_leaning();
         calculate_jump();
-        calculate_lean();
+    }
+
+    private void SetIsGrounded(){
+        isGrounded = Physics.CheckSphere(feet_transform.position, player_settings.isGroundedRadius, ground_mask);
+    }
+
+    private void SetIsFalling(){
+        isFalling = (!isGrounded && character_control.velocity.magnitude > player_settings.isFallingSpeed);
+        
+    }
+
+    private void ShootingPressed(){
+        if (current_weapon){
+            current_weapon.isShooting = true;
+        }
+    }
+
+    private void ShootingReleased(){
+        if (current_weapon){
+            current_weapon.isShooting = false;
+        }
+    }
+
+    private void ReloadPressed(){
+        if (current_weapon && current_weapon.currentAmmo != current_weapon.maxAmmo){
+            current_weapon.currentAmmo = 0;
+        }
     }
 
     private void calculate_movment(){
@@ -103,6 +168,12 @@ public class scr_CharacterController : MonoBehaviour
                     player_settings.current_mod = 1;
                     break;
             }
+
+            weaponAnimationSpeed = character_control.velocity.magnitude / (player_settings.walk_forward_speed * player_settings.current_mod);
+            if (weaponAnimationSpeed > 1){
+                weaponAnimationSpeed = 1;
+            }
+
             vertical_speed *= player_settings.current_mod;
             horizontal_speed *= player_settings.current_mod;
             //set movement direction
@@ -115,7 +186,7 @@ public class scr_CharacterController : MonoBehaviour
         if (player_gravity > gravity_min){
             player_gravity -= gravity_amount * Time.deltaTime;
         }
-        if (player_gravity < -0.1f && character_control.isGrounded){
+        if (player_gravity < -0.1f && isGrounded){
             player_gravity = -1;
         }
         move_speed.y += player_gravity;
@@ -137,6 +208,20 @@ public class scr_CharacterController : MonoBehaviour
         new_cam_rot.x += player_settings.ViewYSensitivity * (player_settings.ViewYInverted ? input_view.y : -input_view.y) * Time.deltaTime;
         new_cam_rot.x = Mathf.Clamp(new_cam_rot.x, viewclamp_y_min, viewclamp_y_max);
         camera_holder.localRotation = Quaternion.Euler(new_cam_rot);
+    }
+
+    private void calculate_leaning(){
+        if(isLeaningLeft){
+            targetLean = leanAngle;
+        }
+        else if(isLeaningRight){
+            targetLean = -leanAngle;
+        }
+        else{
+            targetLean = 0;
+        }
+        currentLean = Mathf.SmoothDamp(currentLean, targetLean, ref leanVelocity, leanSmoothing);
+        LeanPivot.localRotation = Quaternion.Euler(new Vector3(0,0, currentLean));
     }
 
     private void calculate_jump(){
@@ -166,12 +251,8 @@ public class scr_CharacterController : MonoBehaviour
         character_control.center = Vector3.SmoothDamp(character_control.center, current_stance.stance_collider.center, ref center_velocity, player_stance_smooth);
     }
 
-    private void calculate_lean(){
-
-    }
-
     private void jump(){
-        if (!character_control.isGrounded){
+        if (!isGrounded){
             return;
         }
         //set new stance if player is not standing
@@ -184,6 +265,7 @@ public class scr_CharacterController : MonoBehaviour
         }
         jump_initial = Vector3.up * player_settings.jump_height;
         player_gravity = 0;
+        current_weapon.TriggerJump();
     }
 
     private void crouch(){
@@ -193,6 +275,9 @@ public class scr_CharacterController : MonoBehaviour
             }
             player_stance = PlayerStance.stand;
             return;
+        }
+        if (no_headspace(player_crouch.stance_collider.height)){
+                return;
         }
         if (player_stance == PlayerStance.stand && is_sprinting){
             is_sliding = true;
@@ -208,15 +293,10 @@ public class scr_CharacterController : MonoBehaviour
             player_stance = PlayerStance.crouch;
             return;
         }
+        if (no_headspace(player_prone.stance_collider.height)){
+                return;
+        }
         player_stance = PlayerStance.prone;
-    }
-
-    private void lean_left(){
-
-    }
-
-    private void lean_right(){
-
     }
 
     private bool no_headspace(float check_space){
@@ -238,7 +318,7 @@ public class scr_CharacterController : MonoBehaviour
     }
 
     private void slide(){
-        if (character_control.isGrounded){
+        if (isGrounded){
             temp_slide_time -= Time.deltaTime;
             //reduce the slide speed over time
             if(temp_slide_time <= 0 || player_stance != PlayerStance.crouch){
@@ -252,17 +332,10 @@ public class scr_CharacterController : MonoBehaviour
             }
         }
     }
+
+    private void OnDrawGizmos(){
+        Gizmos.DrawWireSphere(feet_transform.position, player_settings.isGroundedRadius);
+    }
+
 }
 
-//--mechanics roadmap--
-//3. slope sliding
-//4. leaning
-//5. diving
-//6. vaulting
-//7. shooting
-
-    //lock cursor to center
-    /*  private void Start(){
-        Cursor.lockstate = CursorLockMode.Locked;
-        Cursor.visible = false;
-    } */
