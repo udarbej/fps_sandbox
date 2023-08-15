@@ -7,7 +7,7 @@ Executable instructions
 1. Download the folder labled "Executable"
 2. Extract the contents of the folder
 3. Run the .exe file "Operation CBT.exe
-4. To exit the program, press alt+F4 together
+4. To exit the program, press the Esc key
 
 Controls:
 L_click [shoot]

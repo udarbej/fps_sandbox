@@ -92,7 +92,7 @@ public class scr_CharacterController : MonoBehaviour
         default_input.Character.Lean_Left_Released.performed += e => isLeaningLeft = false;
         default_input.Character.Lean_Right_Pressed.performed += e => isLeaningRight = true;
         default_input.Character.Lean_Right_Released.performed += e => isLeaningRight = false;
-        //default_input.Character.Pause.performed += e => pause();
+        default_input.Character.Pause.performed += e => quit();
 
         default_input.Weapon.Fire1Pressed.performed += e => ShootingPressed();
         default_input.Weapon.Fire1Released.performed += e => ShootingReleased();
@@ -118,6 +118,10 @@ public class scr_CharacterController : MonoBehaviour
         calculate_stance();
         calculate_leaning();
         calculate_jump();
+    }
+
+    private void quit(){
+        Application.Quit();
     }
 
     private void SetIsGrounded(){

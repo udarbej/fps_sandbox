@@ -60,33 +60,33 @@ ScriptsOnlyBuild:
     - Class: 104
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 1548}
+      Script: {instanceID: 1574}
     - Class: 114
-      Script: {instanceID: 1878}
+      Script: {instanceID: 1904}
     - Class: 114
-      Script: {instanceID: 2264}
+      Script: {instanceID: 2290}
     - Class: 114
-      Script: {instanceID: 2678}
+      Script: {instanceID: 2704}
     - Class: 114
-      Script: {instanceID: 2840}
+      Script: {instanceID: 2866}
     - Class: 114
-      Script: {instanceID: 2892}
+      Script: {instanceID: 2918}
     - Class: 114
-      Script: {instanceID: 3064}
+      Script: {instanceID: 3090}
     - Class: 114
-      Script: {instanceID: 3462}
+      Script: {instanceID: 3488}
     - Class: 114
-      Script: {instanceID: 3826}
+      Script: {instanceID: 3852}
     - Class: 114
-      Script: {instanceID: 4310}
+      Script: {instanceID: 4054}
     - Class: 114
-      Script: {instanceID: 4746}
+      Script: {instanceID: 4338}
     - Class: 114
-      Script: {instanceID: 4914}
+      Script: {instanceID: 4774}
     - Class: 114
-      Script: {instanceID: 5272}
+      Script: {instanceID: 4942}
     - Class: 114
-      Script: {instanceID: 22168}
+      Script: {instanceID: 5300}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -145,29 +145,29 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 1548}
+      Script: {instanceID: 1574}
     - Class: 114
-      Script: {instanceID: 1674}
+      Script: {instanceID: 1700}
     - Class: 114
-      Script: {instanceID: 2276}
+      Script: {instanceID: 2302}
     - Class: 114
-      Script: {instanceID: 2290}
+      Script: {instanceID: 2316}
     - Class: 114
-      Script: {instanceID: 2678}
+      Script: {instanceID: 2704}
     - Class: 114
-      Script: {instanceID: 2840}
+      Script: {instanceID: 2866}
     - Class: 114
-      Script: {instanceID: 3064}
+      Script: {instanceID: 3090}
     - Class: 114
-      Script: {instanceID: 3826}
+      Script: {instanceID: 3852}
     - Class: 114
-      Script: {instanceID: 4272}
+      Script: {instanceID: 4300}
     - Class: 114
-      Script: {instanceID: 4310}
+      Script: {instanceID: 4338}
     - Class: 114
-      Script: {instanceID: 4746}
+      Script: {instanceID: 4774}
     - Class: 114
-      Script: {instanceID: 24096}
+      Script: {instanceID: 18112}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -597,6 +597,12 @@ ScriptsOnlyBuild:
     className: BaseInput
   - hash:
       serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: MainMenu
+  - hash:
+      serializedVersion: 2
       Hash: 18c222bef9ae745ce69ddde9b74337ca
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.EventSystems
@@ -859,12 +865,6 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.EventSystems
     className: TouchInputModule
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: MainMenu
   platform: 19
   scenePathNames:
   - Assets/Scenes/MainMenu.unity
