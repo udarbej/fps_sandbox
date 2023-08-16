@@ -4,18 +4,19 @@ by Jeremy Udarbe
 Github Project Link: https://github.com/asianpenguin24/fps_sandbox.git
 
 Executable instructions
-1. Download the folder labled "Executable"
+1. Download the folder labeled "Executable"
 2. Extract the contents of the folder
 3. Run the .exe file "Operation CBT.exe
 4. To exit the program, press the Esc key
 
 Controls:
+Esc [Exit Game]
 L_click [shoot]
 W [strafe forward]
 A [strafe left]
 S [strafe backward]
 D [strafe right]
-L_Ctrl [crouch]
+C [crouch]
 Z [prone]
 L_Shift + W [sprint]
 L_Shift + W + C [Slide]
